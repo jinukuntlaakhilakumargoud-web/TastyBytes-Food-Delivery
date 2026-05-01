@@ -5,7 +5,7 @@ export const StoreContext = createContext(null);
 
 const StoreContextProvider = (props) => {
 
-    const url = "http://localhost:4000";
+    const url = import.meta.env.MODE === 'development' ? "http://localhost:4000" : "";
     const [token, setToken] = useState("");
     const [cartItems, setCartItems] = useState({});
     const [searchQuery, setSearchQuery] = useState("");
