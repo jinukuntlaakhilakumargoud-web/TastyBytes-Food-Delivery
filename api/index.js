@@ -1,10 +1,13 @@
 import express from "express";
 import cors from "cors";
-import mongoose from "mongoose";
+
 import userRouter from "../backend/routes/userRoute.js";
 import foodRouter from "../backend/routes/foodRoute.js";
 import cartRouter from "../backend/routes/cartRoute.js";
 import orderRouter from "../backend/routes/orderRoute.js";
+import dotenv from "dotenv";
+
+dotenv.config({ path: "./backend/.env" });
 
 const app = express();
 
@@ -12,18 +15,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// Serverless DB connection with caching
-let isConnected = false;
-const connectDB = async () => {
-    if (isConnected) return;
-    try {
-        await mongoose.connect(process.env.MONGODB_URI);
-        isConnected = true;
-        console.log("DB Connected (serverless)");
-    } catch (error) {
-        console.log("DB Connection Error:", error);
-    }
-};
+import { connectDB } from "../backend/config/db.js";
 
 // Connect to DB before every request
 app.use(async (req, res, next) => {

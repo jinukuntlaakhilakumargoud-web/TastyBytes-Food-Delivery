@@ -19,6 +19,7 @@ const loginUser = async (req,res) => {
         }
 
         const isMatch = await bcrypt.compare(password, user.password)
+        console.log("Login Attempt:", { email, inputPassword: password, dbHash: user.password, isMatch });
 
         if(!isMatch){
             return res.json({success:false,message: "Invalid credentials"})
